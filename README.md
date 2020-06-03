@@ -12,8 +12,10 @@ over methods you wish to measure execution time for
 4. use 
 # @LazyBenchmark(priority = 1) 
 with parameter to set priority of method invokation
+
 5. create class with 'main' method in 'test' path of your project (or in 'src/main/java/...' path)
 6. write in 'main' method: 
 # new Benchmark(classes...) 
    and put into constructor the classes contains methods you want to measure execution time for
+   
 7. start 'main' method, see results   

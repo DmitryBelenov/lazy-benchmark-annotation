@@ -8,6 +8,7 @@ https://github.com/DmitryBelenov/lazy-benchmark-annotation/blob/master/lazy-benc
 3. use 
 # @LazyBenchmark 
 over methods you wish to measure execution time for
+
 4. use 
 # @LazyBenchmark(priority = 1) 
 with parameter to set priority of method invokation

@@ -14,4 +14,4 @@ https://github.com/DmitryBelenov/lazy-benchmark-annotation/blob/master/lazy-benc
 # new Benchmark(classes...) 
    and put into constructor the classes contains methods you want to measure execution time for
    
-7. start 'main' method, see results   
+7. start 'main' method, see results. Easy)   

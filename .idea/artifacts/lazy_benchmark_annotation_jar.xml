@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="lazy-benchmark-annotation:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/lazy_benchmark_annotation_jar</output-path>
+    <root id="archive" name="lazy-benchmark-annotation.jar">
+      <element id="module-output" name="lazy-benchmark-annotation" />
+    </root>
+  </artifact>
+</component>

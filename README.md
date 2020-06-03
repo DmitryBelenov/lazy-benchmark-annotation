@@ -2,5 +2,12 @@
 timing benchmark for class methods
 
 # How to use
-download ![lazy-benchmark-annotation.jar](
+1. download ![lazy-benchmark-annotation.jar](
 https://github.com/DmitryBelenov/lazy-benchmark-annotation/blob/master/lazy-benchmark-annotation.jar)
+2. append it as library into your project
+3. use @LazyBenchmark over methods you wish to measure execution time for
+4. use @LazyBenchmark(priority = 1) with parameter to set priority of method invokation
+5. create class with 'main' method in 'test' path of your project
+6. write in 'main' method - new Benchmark(classes...) 
+   and put into constructor the classes contains methods you want to measure execution time for
+7. start 'main' method, see results   

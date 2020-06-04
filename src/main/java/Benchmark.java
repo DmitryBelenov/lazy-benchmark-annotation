@@ -1,5 +1,6 @@
 import annotation.LazyBenchmark;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -92,6 +93,14 @@ public class Benchmark implements Runnable{
 
     private void methodCall(Class clazz, Method method, String formatLine) {
         try {
+            Constructor[] constructors = clazz.getConstructors();
+            for (Constructor c : constructors){
+                Parameter[] p = c.getParameters();
+                if (p.length > 0){
+                    System.out.println(formatLine+" -->  sorry, class with arguments in constructor is not supported");
+                    return;
+                }
+            }
             Parameter[] p = method.getParameters();
             if (p.length > 0) {
                 System.out.println(formatLine+" -->  sorry, methods with arguments is not supported");

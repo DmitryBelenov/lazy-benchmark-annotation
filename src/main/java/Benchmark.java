@@ -102,7 +102,8 @@ public class Benchmark implements Runnable{
             try {
                 method.invoke(clazz.newInstance(), null);
             } catch (Exception e){
-                exception = " was thrown an exception: "+ e.getClass().getSimpleName();
+                int lineNum = e.getCause().getStackTrace()[0].getLineNumber();
+                exception = " was thrown "+ e.getCause().getClass().getSimpleName()+" at line "+lineNum;
             }
             long stop = System.currentTimeMillis();
 

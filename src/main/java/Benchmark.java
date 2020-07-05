@@ -1,16 +1,15 @@
 import annotation.LazyBenchmark;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
+import java.lang.reflect.*;
 import java.util.*;
 
 public class Benchmark implements Runnable{
 
     private long totalTime = 0;
+    private Object[] customRefTypes;
 
-    public Benchmark(Class... clazz) {
+    public Benchmark(Object[] customRefTypes, Class... clazz) {
+        if (customRefTypes != null) this.customRefTypes = customRefTypes;
         run();
     }
 
@@ -102,14 +101,72 @@ public class Benchmark implements Runnable{
                 }
             }
             Parameter[] p = method.getParameters();
+            Object[] args = null;
             if (p.length > 0) {
-                System.out.println(formatLine+" -->  sorry, methods with arguments is not supported");
-                return;
+                args = new Object[p.length];
+                for (int i = 0; i < p.length; i++) {
+                    Type type = p[i].getParameterizedType();
+                    String typeName = type.getTypeName();
+                    boolean isArray = typeName.endsWith("[]");
+                    if (typeName.contains(".")){
+                        String[] typePackArray = typeName.split("\\.");
+                        String refType = typePackArray[typePackArray.length-1];
+                        if (refType.contains("String")){
+                            args[i] = isArray ? new String[]{"Hello", "world"} : "Hello world";
+                        } else if (refType.contains("Integer")){
+                            args[i] = isArray ? new Integer[]{100, 200} : 100;
+                        } else if (refType.contains("Byte")){
+                            args[i] = isArray ? new Byte[]{100,100} : new Byte("100");
+                        } else if (refType.contains("Short")){
+                            args[i] = isArray ? new Short[]{1000,2000} : new Short((short) 1000);
+                        } else if (refType.contains("Long")){
+                            args[i] = isArray ? new Long[]{100L, 200L} : 100L;
+                        } else if (refType.contains("Float")){
+                            args[i] = isArray ? new Float[]{100F, 200F} : 100F;
+                        } else if (refType.contains("Double")){
+                            args[i] = isArray ? new Double[]{100.10, 200.20} : 100.10;
+                        } else if (refType.contains("Boolean")){
+                            args[i] = isArray ? new Boolean[]{true, false} : true;
+                        } else if (refType.contains("Character")){
+                            args[i] = isArray ? new Character[]{'H', 'w'} : 'H';
+                        }
+                    } else if (typeName.contains("int")){
+                        args[i] = isArray ? new int[]{100, 200} : 100;
+                    } else if (typeName.contains("byte")){
+                        if (isArray) args[i] = new byte[]{100, 100};
+                        else args[i] = new Byte("100");
+                    } else if (typeName.contains("short")){
+                        args[i] = isArray ? new short[]{100,200} : new Short("100");
+                    } else if (typeName.contains("long")){
+                        args[i] = isArray ? new long[]{100L, 200L} : 100L;
+                    } else if (typeName.contains("char")){
+                        args[i] = isArray ? new char[]{'H', 'w'} : 'H';
+                    } else if (typeName.contains("float")){
+                        args[i] = isArray ? new float[]{100F, 200F} : 100F;
+                    } else if (typeName.contains("double")){
+                        args[i] = isArray ? new double[]{100.10, 200.20} : 100.10;
+                    } else if (typeName.contains("boolean")){
+                        args[i] = isArray ? new boolean[]{true, false} : true;
+                    } else {
+                        boolean detect = false;
+                        if (customRefTypes != null){
+                            for (Object o : customRefTypes){
+                                if (typeName.contains(o.getClass().getSimpleName())){
+                                    args[i] = o;
+                                    detect = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!detect)
+                            System.out.println(formatLine+" --> no custom argument instance detected");
+                    }
+                }
             }
             String exception = "";
             long start = System.currentTimeMillis();
             try {
-                method.invoke(clazz.newInstance(), null);
+                method.invoke(clazz.newInstance(), args);
             } catch (Exception e){
                 int lineNum = e.getCause().getStackTrace()[0].getLineNumber();
                 exception = " was thrown "+ e.getCause().getClass().getSimpleName()+" at line "+lineNum;

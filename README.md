@@ -18,4 +18,4 @@ https://github.com/DmitryBelenov/lazy-benchmark-annotation/blob/master/lazy-benc
    
 7. start 'main' method, see results. Easy) 
 
-This simple timing benchmark is best to use for measure of timing alghorithms invokations and make faster if your results are not satisfactory.
+This simple timing benchmark is best to use for measure of timing alghorithms invocations and make faster if your results are not satisfactory.

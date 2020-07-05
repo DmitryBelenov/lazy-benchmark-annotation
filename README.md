@@ -13,6 +13,7 @@ https://github.com/DmitryBelenov/lazy-benchmark-annotation/blob/master/lazy-benc
 6. write in 'main' method: 
 # new Benchmark(objects, classes...) 
    and put into constructor the array of your custom reference types and classes contains methods you want to measure execution time for
+   
    Example: see BenchmarkTest class in /test path of project 
    
 7. start 'main' method, see results. Easy) 

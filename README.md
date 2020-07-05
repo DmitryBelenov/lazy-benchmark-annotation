@@ -11,8 +11,9 @@ https://github.com/DmitryBelenov/lazy-benchmark-annotation/blob/master/lazy-benc
 # @LazyBenchmark(priority = 1) 
 5. create class with 'main' method in 'test' path of your project (or in 'src/main/java/...' path)
 6. write in 'main' method: 
-# new Benchmark(classes...) 
-   and put into constructor the classes contains methods you want to measure execution time for
+# new Benchmark(objects, classes...) 
+   and put into constructor the array of your custom reference types and classes contains methods you want to measure execution time for
+   Example: see BenchmarkTest class in /test path of project 
    
 7. start 'main' method, see results. Easy) 
 
